@@ -1,0 +1,807 @@
+/* ========================================
+   AGROCLIMA - Painel Principal
+   CSS do layout interno (sidebar + conteúdo)
+   ======================================== */
+
+/* Variáveis de cor e estilo globais */
+:root {
+    --azul-principal: #82B5DC;
+    --azul-medio:     #79B7E7;
+    --azul-escuro:    #2E6E9E;
+    --azul-fundo:     #E1F0FD;
+    --azul-sidebar:   #1e4d70;
+    --azul-sidebar-hover: #29659a;
+    --azul-sidebar-ativo: #2E6E9E;
+    --laranja-hover:  #F6CEA8;
+    --branco:         #ffffff;
+    --fundo-pagina:   #f0f4f8;
+    --texto-escuro:   #1a3a52;
+    --texto-medio:    #4a6e8a;
+    --texto-claro:    #7a9ab8;
+    --borda:          #d0e4f2;
+    --erro:           #d9534f;
+    --sucesso:        #3a8f5e;
+    --raio:           10px;
+    --sombra-card:    0 2px 12px rgba(46,110,158,0.10);
+    --largura-sidebar: 230px;
+}
+
+/* Reset básico */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: var(--fundo-pagina);
+    color: var(--texto-escuro);
+    min-height: 100vh;
+}
+
+/* ********************************
+   LAYOUT GERAL (sidebar + conteúdo)
+******************************** */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ********************************
+   SIDEBAR
+******************************** */
+.sidebar {
+    width: var(--largura-sidebar);
+    min-width: var(--largura-sidebar);
+    background: var(--azul-sidebar);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+}
+
+/* Logo na sidebar */
+.sidebar-logo {
+    padding: 16px;
+    background: var(--branco);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-logo img {
+    width: 100%;
+    max-width: 160px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Navegação */
+.sidebar-nav {
+    flex: 1;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    transition: background .18s, color .18s;
+}
+
+.nav-item svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+    stroke-width: 1.8;
+}
+
+.nav-item:hover {
+    background: var(--azul-sidebar-hover);
+    color: var(--branco);
+}
+
+/* Item ativo na sidebar */
+.nav-item.ativo {
+    background: var(--azul-sidebar-ativo);
+    color: var(--branco);
+}
+
+/* Usuário logado (rodapé da sidebar) */
+.sidebar-usuario {
+    padding: 14px 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.usuario-avatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.usuario-avatar svg {
+    width: 18px;
+    height: 18px;
+    stroke: rgba(255,255,255,0.8);
+    fill: none;
+    stroke-width: 1.8;
+}
+
+.usuario-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+}
+
+.usuario-nome {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--branco);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.usuario-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+}
+
+/* Botão de logout */
+.btn-logout {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background .18s;
+}
+
+.btn-logout svg {
+    width: 18px;
+    height: 18px;
+    stroke: rgba(255,255,255,0.45);
+    transition: stroke .18s;
+}
+
+.btn-logout:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.btn-logout:hover svg {
+    stroke: rgba(255,255,255,0.9);
+}
+
+/* ********************************
+   CONTEÚDO PRINCIPAL
+******************************** */
+.conteudo {
+    margin-left: var(--largura-sidebar);
+    flex: 1;
+    padding: 36px 40px;
+    min-height: 100vh;
+}
+
+/* Cabeçalho da página */
+.pagina-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.pagina-titulo {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--texto-escuro);
+    line-height: 1.2;
+}
+
+.pagina-sub {
+    font-size: 13.5px;
+    color: var(--texto-claro);
+    margin-top: 4px;
+}
+
+/* Botão "Nova propriedade" */
+.btn-nova-propriedade {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 18px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    background: var(--branco);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color .18s, background .18s, color .18s;
+}
+
+.btn-nova-propriedade svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+}
+
+.btn-nova-propriedade:hover {
+    border-color: var(--azul-medio);
+    background: var(--azul-fundo);
+    color: var(--azul-escuro);
+}
+
+/* ********************************
+   BARRA DE BUSCA
+******************************** */
+.barra-busca-wrap {
+    position: relative;
+    margin-bottom: 20px;
+    max-width: 420px;
+}
+
+.barra-busca-wrap svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    stroke: var(--texto-claro);
+    fill: none;
+    pointer-events: none;
+}
+
+.barra-busca-wrap input {
+    width: 100%;
+    height: 38px;
+    padding: 0 14px 0 38px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--texto-escuro);
+    background: var(--branco);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.barra-busca-wrap input::placeholder { color: var(--texto-claro); }
+
+.barra-busca-wrap input:focus {
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 0 3px rgba(121,183,231,0.15);
+}
+
+/* ********************************
+   TABELA DE PROPRIEDADES
+******************************** */
+.tabela-wrap {
+    background: var(--branco);
+    border-radius: 12px;
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
+    border: 1px solid var(--borda);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+thead tr {
+    background: var(--azul-escuro);
+}
+
+thead th {
+    padding: 13px 18px;
+    text-align: left;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--branco);
+    letter-spacing: 0.3px;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--borda);
+    transition: background .15s;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: var(--azul-fundo);
+}
+
+tbody td {
+    padding: 14px 18px;
+    color: var(--texto-escuro);
+}
+
+/* Link "Acessar painel" */
+.link-painel {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--azul-escuro);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 12.5px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: var(--azul-fundo);
+    border: 1px solid var(--borda);
+    transition: background .18s, border-color .18s, color .18s;
+}
+
+.link-painel:hover {
+    background: var(--azul-principal);
+    border-color: var(--azul-principal);
+    color: var(--branco);
+}
+
+/* Mensagem de tabela vazia */
+.tabela-vazia {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 48px 24px;
+    color: var(--texto-claro);
+    font-size: 13.5px;
+}
+
+.tabela-vazia svg {
+    width: 36px;
+    height: 36px;
+    stroke: var(--azul-principal);
+    fill: none;
+    opacity: 0.5;
+}
+
+.tabela-vazia.visivel {
+    display: flex;
+}
+
+/* ********************************
+   MODAL
+******************************** */
+
+/* Fundo escurecido */
+.modal-fundo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 30, 50, 0.45);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(2px);
+}
+
+.modal-fundo.visivel {
+    display: flex;
+}
+
+/* Card do modal */
+.modal {
+    background: var(--branco);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 16px 48px rgba(10,30,50,0.2);
+    display: flex;
+    flex-direction: column;
+    animation: entrarModal .25s cubic-bezier(.22,.68,0,1.2) both;
+    max-height: 90vh;
+}
+
+@keyframes entrarModal {
+    from { opacity: 0; transform: translateY(20px) scale(.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Cabeçalho do modal */
+.modal-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1.5px solid var(--azul-fundo);
+}
+
+.modal-titulo {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--texto-escuro);
+}
+
+.modal-fechar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    color: var(--texto-claro);
+    border-radius: 6px;
+    transition: background .15s, color .15s;
+}
+
+.modal-fechar:hover {
+    background: var(--azul-fundo);
+    color: var(--texto-escuro);
+}
+
+.modal-fechar svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Corpo do modal */
+.modal-corpo {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Rodapé do modal */
+.modal-rodape {
+    padding: 16px 24px;
+    border-top: 1.5px solid var(--azul-fundo);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Botão cancelar */
+.btn-cancelar {
+    height: 38px;
+    padding: 0 18px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-medio);
+    background: var(--branco);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+
+.btn-cancelar:hover {
+    background: var(--fundo-pagina);
+    border-color: var(--azul-principal);
+}
+
+/* Botão salvar do modal */
+.btn-primario-modal {
+    height: 38px;
+    padding: 0 22px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--branco);
+    background: linear-gradient(180deg, var(--azul-escuro) 0%, #245d87 100%);
+    border: 1px solid #1e5075;
+    border-radius: var(--raio);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: filter .2s;
+}
+
+.btn-primario-modal:hover { filter: brightness(1.08); }
+.btn-primario-modal:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-primario-modal .btn-texto { position: relative; z-index: 1; }
+
+/* ********************************
+   CAMPOS DO MODAL (reaproveitados do cadastro)
+******************************** */
+.field {
+    margin-bottom: 18px;
+    position: relative;
+}
+
+.field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--azul-escuro);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+}
+
+.input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.input-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--azul-principal);
+    fill: none;
+}
+
+.field input {
+    width: 100%;
+    height: 42px;
+    padding: 0 38px 0 40px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: var(--texto-escuro);
+    background: var(--branco);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.field input::placeholder { color: var(--texto-claro); }
+
+.field input:focus {
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 0 3px rgba(121,183,231,0.18);
+}
+
+.field input.erro { border-color: var(--erro); }
+.field input.erro:focus { box-shadow: 0 0 0 3px rgba(217,83,79,.13); }
+
+/* Spinner de busca dentro do input de localização */
+.spinner-busca {
+    display: none;
+    position: absolute;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--borda);
+    border-top-color: var(--azul-escuro);
+    border-radius: 50%;
+    animation: girar .7s linear infinite;
+}
+
+.spinner-busca.visivel { display: block; }
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+/* Mensagem de erro de campo */
+.erro-campo {
+    font-size: 11.5px;
+    color: var(--erro);
+    margin-top: 4px;
+    display: none;
+}
+
+.erro-campo.visivel { display: block; }
+
+/* ********************************
+   LISTA DE LOCAIS (retorno da API)
+******************************** */
+.lista-locais {
+    display: none;
+    flex-direction: column;
+    border: 1.5px solid var(--borda);
+    border-radius: var(--raio);
+    overflow: hidden;
+    margin-top: -10px;
+    margin-bottom: 16px;
+}
+
+.lista-locais.visivel { display: flex; }
+
+/* Cada item retornado pela API */
+.item-local {
+    padding: 11px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--texto-escuro);
+    border-bottom: 1px solid var(--borda);
+    transition: background .15s;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.item-local:last-child { border-bottom: none; }
+
+.item-local:hover { background: var(--azul-fundo); }
+
+.item-local-nome {
+    font-weight: 600;
+}
+
+.item-local-detalhe {
+    font-size: 11.5px;
+    color: var(--texto-claro);
+}
+
+/* Mensagem "nenhum local encontrado" */
+.sem-resultados {
+    padding: 14px;
+    font-size: 13px;
+    color: var(--texto-claro);
+    text-align: center;
+}
+
+/* ********************************
+   LOCAL SELECIONADO
+******************************** */
+.local-selecionado {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: var(--azul-fundo);
+    border: 1.5px solid var(--azul-principal);
+    border-radius: var(--raio);
+    padding: 10px 14px;
+    margin-top: -8px;
+    margin-bottom: 4px;
+}
+
+.local-selecionado.visivel { display: flex; }
+
+.local-selecionado svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--azul-escuro);
+    fill: none;
+    flex-shrink: 0;
+}
+
+.local-selecionado-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.local-selecionado-nome {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--texto-escuro);
+}
+
+.local-selecionado-coords {
+    font-size: 11.5px;
+    color: var(--texto-claro);
+}
+
+.local-selecionado-remover {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--texto-claro);
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border-radius: 4px;
+    transition: color .15s;
+}
+
+.local-selecionado-remover:hover { color: var(--erro); }
+
+.local-selecionado-remover svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* ********************************
+   BANNER DE ERRO (modal e geral)
+******************************** */
+.banner {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: #fff5f5;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #a02020;
+}
+
+.banner.visivel { display: flex; }
+
+.banner svg {
+    width: 16px;
+    height: 16px;
+    stroke: #a02020;
+    fill: none;
+    flex-shrink: 0;
+}
+
+/* ********************************
+   SPINNER DO BOTÃO
+******************************** */
+.spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,.35);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: girar .7s linear infinite;
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.btn-primario-modal.carregando .btn-texto { opacity: 0; }
+.btn-primario-modal.carregando .spinner   { display: block; }
+
+/* ********************************
+   RESPONSIVO
+******************************** */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+        min-width: 60px;
+    }
+
+    .sidebar-logo img { display: none; }
+    .nav-item span    { display: none; }
+    .nav-item         { justify-content: center; padding: 12px; }
+    .sidebar-usuario  { justify-content: center; }
+    .usuario-info     { display: none; }
+
+    .conteudo {
+        margin-left: 60px;
+        padding: 24px 20px;
+    }
+}

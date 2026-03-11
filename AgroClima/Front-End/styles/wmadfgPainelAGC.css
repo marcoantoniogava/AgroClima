@@ -1,0 +1,507 @@
+/* ========================================
+   AGROCLIMA - Painel Climático (AC003)
+   CSS principal
+   ======================================== */
+
+   @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+   
+   :root {
+       --azul-principal: #82B5DC;
+       --azul-medio:     #79B7E7;
+       --azul-escuro:    #2E6E9E;
+       --azul-fundo:     #E1F0FD;
+       --azul-card:      #F0F7FF;
+       --laranja:        #F6CEA8;
+       --laranja-escuro: #E8965A;
+       --branco:         #FFFFFF;
+       --cinza-texto:    #4A5568;
+       --cinza-claro:    #EDF2F7;
+       --cinza-borda:    #CBD5E0;
+       --verde:          #48BB78;
+       --vermelho:       #FC8181;
+       --texto:          #2D3748;
+       --sombra:         0 2px 12px rgba(46,110,158,0.10);
+       --sombra-card:    0 4px 20px rgba(46,110,158,0.13);
+       --radius:         14px;
+       --radius-sm:      8px;
+   }
+   
+   body {
+       font-family: 'Open Sans', sans-serif;
+       background: var(--azul-fundo);
+       color: var(--texto);
+       min-height: 100vh;
+   }
+   
+   /* ??????????????????????????????????????
+      HEADER
+   ?????????????????????????????????????? */
+   .header {
+       background: var(--branco);
+       border-bottom: 1px solid var(--cinza-borda);
+       padding: 0 32px;
+       display: flex;
+       align-items: center;
+       gap: 24px;
+       height: 64px;
+       position: sticky;
+       top: 0;
+       z-index: 100;
+       box-shadow: 0 1px 8px rgba(46,110,158,0.08);
+   }
+   
+   .header-logo {
+       height: 40px;
+       width: auto;
+       flex-shrink: 0;
+   }
+   
+   .header-divider {
+       width: 1px;
+       height: 28px;
+       background: var(--cinza-borda);
+       flex-shrink: 0;
+   }
+   
+   .header-propriedade {
+       flex: 1;
+       min-width: 0;
+   }
+   
+   .header-propriedade-nome {
+       font-size: 16px;
+       font-weight: 700;
+       color: var(--azul-escuro);
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+   }
+   
+   .header-propriedade-local {
+       font-size: 12px;
+       color: var(--cinza-texto);
+       display: flex;
+       align-items: center;
+       gap: 4px;
+       margin-top: 1px;
+   }
+   
+   .header-propriedade-local svg {
+       width: 12px;
+       height: 12px;
+       stroke: var(--azul-principal);
+       fill: none;
+       stroke-width: 2;
+       flex-shrink: 0;
+   }
+   
+   .btn-voltar {
+       display: flex;
+       align-items: center;
+       gap: 6px;
+       padding: 7px 16px;
+       border: 1px solid var(--cinza-borda);
+       border-radius: var(--radius-sm);
+       background: var(--branco);
+       color: var(--cinza-texto);
+       font-size: 13px;
+       font-weight: 600;
+       font-family: inherit;
+       cursor: pointer;
+       transition: all .18s;
+       text-decoration: none;
+       flex-shrink: 0;
+   }
+   
+   .btn-voltar svg {
+       width: 15px;
+       height: 15px;
+       stroke: currentColor;
+       fill: none;
+       stroke-width: 2.2;
+   }
+   
+   .btn-voltar:hover {
+       background: var(--azul-fundo);
+       border-color: var(--azul-principal);
+       color: var(--azul-escuro);
+   }
+   
+   /* ??????????????????????????????????????
+      ABAS DE NAVEGAÇÃO
+   ?????????????????????????????????????? */
+   .nav-abas {
+       background: var(--branco);
+       border-bottom: 1px solid var(--cinza-borda);
+       padding: 0 32px;
+       display: flex;
+       gap: 0;
+   }
+   
+   .nav-aba {
+       padding: 14px 20px;
+       font-size: 13px;
+       font-weight: 600;
+       color: var(--cinza-texto);
+       cursor: pointer;
+       border: none;
+       background: none;
+       font-family: inherit;
+       border-bottom: 2px solid transparent;
+       margin-bottom: -1px;
+       transition: all .18s;
+       display: flex;
+       align-items: center;
+       gap: 7px;
+       text-decoration: none;
+   }
+   
+   .nav-aba svg {
+       width: 15px;
+       height: 15px;
+       stroke: currentColor;
+       fill: none;
+       stroke-width: 2;
+   }
+   
+   .nav-aba:hover {
+       color: var(--azul-escuro);
+   }
+   
+   .nav-aba.ativo {
+       color: var(--azul-escuro);
+       border-bottom-color: var(--azul-escuro);
+   }
+   
+   /* ??????????????????????????????????????
+      CONTEÚDO PRINCIPAL
+   ?????????????????????????????????????? */
+   .conteudo {
+       max-width: 1200px;
+       margin: 0 auto;
+       padding: 32px 32px 48px;
+   }
+   
+   /* ??????????????????????????????????????
+      ABAS DE PERÍODO (48h / 7 dias)
+   ?????????????????????????????????????? */
+   .periodo-wrap {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       margin-bottom: 24px;
+       flex-wrap: wrap;
+       gap: 12px;
+   }
+   
+   .periodo-titulo {
+       font-size: 18px;
+       font-weight: 700;
+       color: var(--azul-escuro);
+   }
+   
+   .periodo-abas {
+       display: flex;
+       background: var(--branco);
+       border: 1px solid var(--cinza-borda);
+       border-radius: var(--radius-sm);
+       padding: 3px;
+       gap: 2px;
+   }
+   
+   .periodo-aba {
+       padding: 6px 16px;
+       border-radius: 6px;
+       font-size: 13px;
+       font-weight: 600;
+       font-family: inherit;
+       border: none;
+       background: none;
+       color: var(--cinza-texto);
+       cursor: pointer;
+       transition: all .18s;
+   }
+   
+   .periodo-aba.ativo {
+       background: var(--azul-escuro);
+       color: var(--branco);
+   }
+   
+   /* ??????????????????????????????????????
+      CARDS DE CLIMA ATUAL
+   ?????????????????????????????????????? */
+   .cards-clima {
+       display: grid;
+       grid-template-columns: repeat(4, 1fr);
+       gap: 16px;
+       margin-bottom: 28px;
+   }
+   
+   .card-clima {
+       background: var(--branco);
+       border-radius: var(--radius);
+       padding: 20px;
+       box-shadow: var(--sombra-card);
+       border: 1px solid rgba(130,181,220,0.15);
+       position: relative;
+       overflow: hidden;
+       transition: transform .18s, box-shadow .18s;
+   }
+   
+   .card-clima:hover {
+       transform: translateY(-2px);
+       box-shadow: 0 8px 28px rgba(46,110,158,0.16);
+   }
+   
+   .card-clima-icone {
+       width: 40px;
+       height: 40px;
+       border-radius: 10px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       margin-bottom: 12px;
+   }
+   
+   .card-clima-icone svg {
+       width: 22px;
+       height: 22px;
+       fill: none;
+       stroke-width: 1.8;
+   }
+   
+   .card-clima-icone.temp   { background: #FFF5F0; }
+   .card-clima-icone.temp svg   { stroke: #E8965A; }
+   .card-clima-icone.umid   { background: #EBF8FF; }
+   .card-clima-icone.umid svg   { stroke: #3182CE; }
+   .card-clima-icone.vento  { background: #F0FFF4; }
+   .card-clima-icone.vento svg  { stroke: #38A169; }
+   .card-clima-icone.chuva  { background: #EBF8FF; }
+   .card-clima-icone.chuva svg  { stroke: var(--azul-principal); }
+   
+   .card-clima-label {
+       font-size: 11px;
+       font-weight: 600;
+       color: var(--cinza-texto);
+       text-transform: uppercase;
+       letter-spacing: .5px;
+       margin-bottom: 4px;
+   }
+   
+   .card-clima-valor {
+       font-size: 28px;
+       font-weight: 700;
+       color: var(--texto);
+       line-height: 1.1;
+       margin-bottom: 2px;
+   }
+   
+   .card-clima-valor span {
+       font-size: 16px;
+       font-weight: 600;
+       color: var(--cinza-texto);
+   }
+   
+   .card-clima-detalhe {
+       font-size: 12px;
+       color: var(--cinza-texto);
+       margin-top: 4px;
+   }
+   
+   /* ??????????????????????????????????????
+      ÁREA DO GRÁFICO
+   ?????????????????????????????????????? */
+   .grafico-wrap {
+       background: var(--branco);
+       border-radius: var(--radius);
+       padding: 24px;
+       box-shadow: var(--sombra-card);
+       border: 1px solid rgba(130,181,220,0.15);
+       margin-bottom: 28px;
+   }
+   
+   .grafico-header {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       margin-bottom: 20px;
+       flex-wrap: wrap;
+       gap: 12px;
+   }
+   
+   .grafico-titulo {
+       font-size: 15px;
+       font-weight: 700;
+       color: var(--texto);
+   }
+   
+   .grafico-legenda {
+       display: flex;
+       gap: 16px;
+   }
+   
+   .legenda-item {
+       display: flex;
+       align-items: center;
+       gap: 6px;
+       font-size: 12px;
+       color: var(--cinza-texto);
+       font-weight: 600;
+   }
+   
+   .legenda-cor {
+       width: 12px;
+       height: 12px;
+       border-radius: 3px;
+   }
+   
+   .legenda-cor.temp  { background: #E8965A; }
+   .legenda-cor.chuva { background: var(--azul-principal); }
+   .legenda-cor.umid  { background: #3182CE; }
+   
+   .grafico-container {
+       position: relative;
+       height: 260px;
+   }
+   
+   /* ??????????????????????????????????????
+      TABELA DE PREVISÃO 7 DIAS
+   ?????????????????????????????????????? */
+   .tabela-7dias {
+       background: var(--branco);
+       border-radius: var(--radius);
+       box-shadow: var(--sombra-card);
+       border: 1px solid rgba(130,181,220,0.15);
+       overflow: hidden;
+       margin-bottom: 28px;
+   }
+   
+   .tabela-7dias-header {
+       padding: 18px 24px;
+       border-bottom: 1px solid var(--cinza-claro);
+       font-size: 15px;
+       font-weight: 700;
+       color: var(--texto);
+   }
+   
+   .tabela-7dias table {
+       width: 100%;
+       border-collapse: collapse;
+   }
+   
+   .tabela-7dias th {
+       padding: 10px 24px;
+       text-align: left;
+       font-size: 11px;
+       font-weight: 700;
+       text-transform: uppercase;
+       letter-spacing: .5px;
+       color: var(--cinza-texto);
+       background: var(--cinza-claro);
+       border-bottom: 1px solid var(--cinza-borda);
+   }
+   
+   .tabela-7dias td {
+       padding: 14px 24px;
+       font-size: 14px;
+       color: var(--texto);
+       border-bottom: 1px solid var(--cinza-claro);
+   }
+   
+   .tabela-7dias tr:last-child td { border-bottom: none; }
+   .tabela-7dias tr:hover td { background: var(--azul-card); }
+   
+   .dia-nome {
+       font-weight: 700;
+       color: var(--azul-escuro);
+   }
+   
+   .temp-max { color: var(--laranja-escuro); font-weight: 700; }
+   .temp-min { color: var(--azul-escuro); font-weight: 600; }
+   
+   .barra-chuva-wrap {
+       display: flex;
+       align-items: center;
+       gap: 8px;
+   }
+   
+   .barra-chuva {
+       height: 6px;
+       border-radius: 3px;
+       background: var(--azul-principal);
+       min-width: 3px;
+       transition: width .3s;
+   }
+   
+   /* ??????????????????????????????????????
+      SEÇÃO DE PERÍODO (paineis)
+   ?????????????????????????????????????? */
+   .painel-48h, .painel-7dias {
+       display: none;
+   }
+   
+   .painel-48h.ativo, .painel-7dias.ativo {
+       display: block;
+   }
+   
+   /* ??????????????????????????????????????
+      LOADING / ERRO
+   ?????????????????????????????????????? */
+   .estado-loading,
+   .estado-erro {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       padding: 64px 32px;
+       text-align: center;
+       gap: 16px;
+   }
+   
+   .estado-loading .spinner-api {
+       width: 36px;
+       height: 36px;
+       border: 3px solid var(--cinza-borda);
+       border-top-color: var(--azul-escuro);
+       border-radius: 50%;
+       animation: girar .8s linear infinite;
+   }
+   
+   @keyframes girar {
+       to { transform: rotate(360deg); }
+   }
+   
+   .estado-loading p,
+   .estado-erro p {
+       color: var(--cinza-texto);
+       font-size: 14px;
+   }
+   
+   .estado-erro svg {
+       width: 40px;
+       height: 40px;
+       stroke: var(--vermelho);
+       fill: none;
+       stroke-width: 1.5;
+   }
+   
+   .estado-erro p { color: var(--vermelho); font-weight: 600; }
+   
+   /* ??????????????????????????????????????
+      RESPONSIVO
+   ?????????????????????????????????????? */
+   @media (max-width: 900px) {
+       .cards-clima { grid-template-columns: repeat(2, 1fr); }
+       .conteudo { padding: 20px 16px 40px; }
+       .header, .nav-abas { padding: 0 16px; }
+   }
+   
+   @media (max-width: 560px) {
+       .cards-clima { grid-template-columns: 1fr 1fr; }
+       .header-propriedade-nome { font-size: 14px; }
+       .card-clima-valor { font-size: 22px; }
+       .tabela-7dias th:nth-child(4),
+       .tabela-7dias td:nth-child(4) { display: none; }
+   }
