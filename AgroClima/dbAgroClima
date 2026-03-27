@@ -1,0 +1,7 @@
+banco: marcog -> dbgs
+
+Tabelas
+
+mg-usuarios (id-usuario, email, usu-senha)
+mg-propriedades (id-propriedade, id-usuario, nome, localizacao, latitude, longitude)
+mg-alertas (id-alerta, id-usuario, id-propriedade, tipo, descricao, data-alerta, hora-alerta, lido)

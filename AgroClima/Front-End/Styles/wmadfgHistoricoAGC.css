@@ -1,0 +1,424 @@
+/* ========================================
+   AGROCLIMA - Histórico de Alertas (AC006)
+   CSS complementar (usa wmadfgAGC2css.css + wmadfgAlertasAGC.css como base)
+   ======================================== */
+
+/* ??????????????????????????????????????
+   CONTROLES: BUSCA + FILTROS
+?????????????????????????????????????? */
+.hist-controles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.hist-busca-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.hist-busca-wrap svg {
+    position: absolute;
+    left: 14px;
+    width: 16px;
+    height: 16px;
+    stroke: var(--cinza-texto, #718096);
+    fill: none;
+    stroke-width: 2;
+    pointer-events: none;
+}
+
+.hist-busca {
+    width: 100%;
+    padding: 10px 16px 10px 42px;
+    border: 1.5px solid var(--borda, #E2E8F0);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--texto-escuro, #2D3748);
+    background: var(--branco, #fff);
+    transition: border-color .18s, box-shadow .18s;
+    outline: none;
+}
+
+.hist-busca:focus {
+    border-color: var(--azul-principal, #82B5DC);
+    box-shadow: 0 0 0 3px rgba(130,181,220,0.18);
+}
+
+.hist-busca::placeholder {
+    color: #A0AEC0;
+}
+
+/* ??????????????????????????????????????
+   TABELA
+?????????????????????????????????????? */
+.hist-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--branco, #fff);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--borda, #E2E8F0);
+    box-shadow: 0 2px 12px rgba(46,110,158,0.08);
+}
+
+.hist-tabela thead tr {
+    background: var(--azul-fundo, #E1F0FD);
+    border-bottom: 1px solid var(--borda, #E2E8F0);
+}
+
+.hist-tabela th {
+    padding: 12px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--azul-escuro, #2E6E9E);
+    text-align: left;
+}
+
+.hist-tabela tbody tr {
+    border-bottom: 1px solid var(--borda, #E2E8F0);
+    transition: background .15s;
+}
+
+.hist-tabela tbody tr:last-child {
+    border-bottom: none;
+}
+
+.hist-tabela tbody tr:hover {
+    background: var(--azul-fundo, #E1F0FD);
+}
+
+.hist-tabela td {
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--texto-escuro, #2D3748);
+    vertical-align: middle;
+}
+
+/* Coluna tipo ? badge colorido */
+.hist-tipo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    white-space: nowrap;
+}
+
+.hist-tipo-badge svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+.hist-tipo-badge.CHUVA   { background: #EBF8FF; color: #2B6CB0; }
+.hist-tipo-badge.VENTO   { background: #F0FFF4; color: #276749; }
+.hist-tipo-badge.UMIDADE { background: #FFFFF0; color: #975A16; }
+
+/* Coluna data ? monoespaçado discreto */
+.hist-data {
+    white-space: nowrap;
+    color: var(--cinza-texto, #718096);
+    font-size: 12px;
+}
+
+/* Coluna propriedade */
+.hist-prop {
+    font-weight: 600;
+    color: var(--azul-escuro, #2E6E9E);
+}
+
+/* ??????????????????????????????????????
+   RODAPÉ: INFO + PAGINAÇÃO
+?????????????????????????????????????? */
+.hist-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 4px 0;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hist-info-pag {
+    font-size: 13px;
+    color: var(--cinza-texto, #718096);
+}
+
+.hist-paginacao {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.hist-pag-btn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 7px;
+    border: 1.5px solid var(--borda, #E2E8F0);
+    background: var(--branco, #fff);
+    color: var(--cinza-texto, #4A5568);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hist-pag-btn:hover:not(:disabled) {
+    background: var(--azul-fundo, #E1F0FD);
+    border-color: var(--azul-principal, #82B5DC);
+    color: var(--azul-escuro, #2E6E9E);
+}
+
+.hist-pag-btn.ativo {
+    background: var(--azul-escuro, #2E6E9E);
+    border-color: var(--azul-escuro, #2E6E9E);
+    color: #fff;
+}
+
+.hist-pag-btn:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+.hist-pag-reticencias {
+    font-size: 13px;
+    color: var(--cinza-texto, #718096);
+    padding: 0 4px;
+}
+
+/* ??????????????????????????????????????
+   RESPONSIVO
+?????????????????????????????????????? */
+@media (max-width: 700px) {
+    .hist-tabela th:nth-child(2),
+    .hist-tabela td:nth-child(2) { display: none; } /* esconde descrição em telas pequenas */
+    .hist-rodape { flex-direction: column; align-items: flex-start; }
+}
+
+/* ??????????????????????????????????????
+   BOTÃO EXCLUIR TODOS (cabeçalho)
+?????????????????????????????????????? */
+.btn-excluir-todos {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    background: #FFF5F5;
+    border: 1.5px solid #FC8181;
+    border-radius: 8px;
+    color: #C53030;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .16s, border-color .16s, color .16s, box-shadow .16s;
+    white-space: nowrap;
+}
+
+.btn-excluir-todos svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+
+.btn-excluir-todos:hover {
+    background: #FED7D7;
+    border-color: #C53030;
+    box-shadow: 0 0 0 3px rgba(197,48,48,0.12);
+}
+
+.btn-excluir-todos:disabled {
+    opacity: .45;
+    cursor: default;
+    box-shadow: none;
+}
+
+/* ??????????????????????????????????????
+   COLUNA AÇÃO na tabela
+?????????????????????????????????????? */
+.hist-tabela th.col-acao,
+.hist-tabela td.col-acao {
+    width: 52px;
+    text-align: center;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+/* Botão lixeira por linha */
+.btn-excluir-linha {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+    border: 1.5px solid transparent;
+    background: transparent;
+    color: #A0AEC0;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s;
+    padding: 0;
+}
+
+.btn-excluir-linha svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    pointer-events: none;
+}
+
+.btn-excluir-linha:hover {
+    background: #FFF5F5;
+    border-color: #FC8181;
+    color: #C53030;
+}
+
+/* Linha sendo removida (animação fade-out) */
+.hist-linha-removendo {
+    animation: fadeOutRow .3s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes fadeOutRow {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(20px); }
+}
+
+/* ??????????????????????????????????????
+   MODAL DE CONFIRMAÇÃO
+?????????????????????????????????????? */
+.hist-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 60, 90, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeInOverlay .18s ease;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.hist-modal {
+    background: var(--branco, #fff);
+    border-radius: 14px;
+    padding: 28px 32px 24px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 12px 48px rgba(30,60,90,0.22);
+    animation: slideUpModal .2s ease;
+    text-align: center;
+}
+
+@keyframes slideUpModal {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hist-modal-icone {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #FFF5F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.hist-modal-icone svg {
+    width: 24px;
+    height: 24px;
+    stroke: #C53030;
+    fill: none;
+    stroke-width: 2;
+}
+
+.hist-modal h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--texto-escuro, #2D3748);
+}
+
+.hist-modal p {
+    margin: 0 0 22px;
+    font-size: 13px;
+    color: var(--cinza-texto, #718096);
+    line-height: 1.5;
+}
+
+.hist-modal-acoes {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.hist-modal-acoes button {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: background .15s, box-shadow .15s;
+}
+
+.hist-modal-cancelar {
+    background: var(--branco, #fff);
+    border-color: var(--borda, #E2E8F0) !important;
+    color: var(--cinza-texto, #4A5568);
+}
+
+.hist-modal-cancelar:hover {
+    background: var(--azul-fundo, #E1F0FD);
+    border-color: var(--azul-principal, #82B5DC) !important;
+}
+
+.hist-modal-confirmar {
+    background: #C53030;
+    border-color: #C53030 !important;
+    color: #fff;
+}
+
+.hist-modal-confirmar:hover {
+    background: #9B2C2C;
+    box-shadow: 0 0 0 3px rgba(197,48,48,0.18);
+}
+
+/* ??????????????????????????????????????
+   RESPONSIVO
+?????????????????????????????????????? */
+@media (max-width: 700px) {
+    .hist-tabela th.col-acao,
+    .hist-tabela td.col-acao { display: table-cell; } /* mantém coluna ação mesmo em mobile */
+    .pagina-cabecalho { flex-wrap: wrap; gap: 10px; }
+}

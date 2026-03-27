@@ -1,0 +1,415 @@
+/* ========================================
+   AGROCLIMA - Janelas Operacionais (AC005)
+   CSS complementar (usa wmadfgPainelAGC.css como base)
+   ======================================== */
+
+/* ??????????????????????????????????????
+   ESTADO DE LOADING
+?????????????????????????????????????? */
+.jan-estado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 32px;
+    gap: 16px;
+    text-align: center;
+    color: var(--cinza-texto);
+    font-size: 15px;
+}
+
+.jan-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--cinza-borda);
+    border-top-color: var(--azul-escuro);
+    border-radius: 50%;
+    animation: janGirar .8s linear infinite;
+}
+
+@keyframes janGirar { to { transform: rotate(360deg); } }
+
+/* ??????????????????????????????????????
+   CABEÇALHO DA PÁGINA
+?????????????????????????????????????? */
+.jan-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.jan-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    margin-bottom: 4px;
+}
+
+.jan-subtitulo {
+    font-size: 13px;
+    color: var(--cinza-texto);
+}
+
+/* ??????????????????????????????????????
+   BLOCO DE ATIVIDADE
+?????????????????????????????????????? */
+.jan-bloco {
+    background: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid var(--cinza-borda);
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    transition: box-shadow .18s;
+}
+
+.jan-bloco:hover {
+    box-shadow: var(--sombra-card);
+}
+
+/* Header do bloco */
+.jan-bloco-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.jan-bloco-icone {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.jan-bloco-icone svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+}
+
+.jan-bloco-icone.pulv  { background: #EBF8FF; color: #2B6CB0; }
+.jan-bloco-icone.plant { background: #F0FFF4; color: #276749; }
+.jan-bloco-icone.colh  { background: #FFFFF0; color: #975A16; }
+
+.jan-bloco-info { flex: 1; min-width: 0; }
+
+.jan-bloco-nome {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.jan-bloco-desc {
+    font-size: 12px;
+    color: var(--cinza-texto);
+    margin-top: 2px;
+}
+
+/* Badge de status no header do bloco */
+.jan-status-badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    flex-shrink: 0;
+}
+
+.jan-status-badge.favoravel   { background: #C6F6D5; color: #22543D; }
+.jan-status-badge.atencao    { background: #FEFCBF; color: #744210; }
+.jan-status-badge.desfavoravel { background: #FED7D7; color: #742A2A; }
+
+/* ??????????????????????????????????????
+   INDICADORES CLIMÁTICOS
+?????????????????????????????????????? */
+.jan-indicadores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--cinza-borda);
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.jan-indicador {
+    background: var(--branco);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.jan-ind-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--cinza-texto);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.jan-ind-label svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--azul-principal);
+    fill: none;
+    stroke-width: 2;
+}
+
+.jan-ind-valor {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.jan-ind-avaliacao {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    align-self: flex-start;
+}
+
+.jan-ind-avaliacao.ok       { background: #C6F6D5; color: #22543D; }
+.jan-ind-avaliacao.atencao  { background: #FEFCBF; color: #744210; }
+.jan-ind-avaliacao.ruim     { background: #FED7D7; color: #742A2A; }
+
+/* ??????????????????????????????????????
+   LINHA DO TEMPO 24H
+?????????????????????????????????????? */
+.jan-timeline-wrap {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.jan-timeline-titulo {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--cinza-texto);
+    margin-bottom: 12px;
+}
+
+.jan-timeline {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.jan-hora {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 44px;
+    flex-shrink: 0;
+}
+
+.jan-hora-label {
+    font-size: 10px;
+    color: var(--cinza-texto);
+    font-weight: 600;
+}
+
+.jan-hora-barra {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.jan-hora-barra svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+.jan-hora-barra.favoravel    { background: #C6F6D5; color: #22543D; }
+.jan-hora-barra.atencao     { background: #FEFCBF; color: #744210; }
+.jan-hora-barra.desfavoravel { background: #FED7D7; color: #742A2A; }
+
+/* Hora atual destacada */
+.jan-hora.atual .jan-hora-barra {
+    outline: 2px solid var(--azul-escuro);
+    outline-offset: 1px;
+}
+
+.jan-hora.atual .jan-hora-label {
+    color: var(--azul-escuro);
+    font-weight: 700;
+}
+
+/* Legenda da timeline */
+.jan-timeline-legenda {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.jan-legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--cinza-texto);
+}
+
+.jan-legenda-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.jan-legenda-dot.favoravel    { background: #C6F6D5; border: 1px solid #9AE6B4; }
+.jan-legenda-dot.atencao     { background: #FEFCBF; border: 1px solid #F6E05E; }
+.jan-legenda-dot.desfavoravel { background: #FED7D7; border: 1px solid #FC8181; }
+
+/* Faixa de resumo da janela favorável */
+.jan-janela-resumo {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--cinza-texto);
+    font-style: italic;
+}
+
+.jan-janela-resumo strong {
+    color: #276749;
+    font-style: normal;
+}
+
+/* ??????????????????????????????????????
+   CALENDÁRIO 7 DIAS
+?????????????????????????????????????? */
+.jan-calendario-wrap {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.jan-calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.jan-dia-card {
+    border-radius: 10px;
+    border: 1px solid var(--cinza-borda);
+    padding: 12px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform .15s;
+}
+
+.jan-dia-card:hover { transform: translateY(-2px); }
+
+.jan-dia-card.favoravel    { border-color: #9AE6B4; background: #F0FFF4; }
+.jan-dia-card.atencao     { border-color: #F6E05E; background: #FFFFF0; }
+.jan-dia-card.desfavoravel { border-color: #FC8181; background: #FFF5F5; }
+
+.jan-dia-semana {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    color: var(--cinza-texto);
+}
+
+.jan-dia-num {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.jan-dia-status-icone {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.jan-dia-status-icone svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+}
+
+.jan-dia-card.favoravel    .jan-dia-status-icone { background: #C6F6D5; color: #22543D; }
+.jan-dia-card.atencao     .jan-dia-status-icone { background: #FEFCBF; color: #744210; }
+.jan-dia-card.desfavoravel .jan-dia-status-icone { background: #FED7D7; color: #742A2A; }
+
+.jan-dia-detalhe {
+    font-size: 10px;
+    color: var(--cinza-texto);
+    line-height: 1.4;
+}
+
+/* ??????????????????????????????????????
+   RECOMENDAÇÃO
+?????????????????????????????????????? */
+.jan-recomendacao {
+    padding: 14px 24px;
+    font-size: 13px;
+    color: var(--cinza-texto);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-style: italic;
+    background: var(--cinza-claro);
+}
+
+.jan-recomendacao svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--azul-principal);
+    fill: none;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+
+/* ??????????????????????????????????????
+   RESPONSIVO
+?????????????????????????????????????? */
+@media (max-width: 700px) {
+    .jan-calendario {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .jan-bloco-header {
+        flex-wrap: wrap;
+    }
+    .jan-cabecalho {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .jan-calendario {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
