@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgroClima ? Criar Conta</title>
+  <title>AgroClima - Criar Conta</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script src="/sistema/jquery/jquery.min.js"></script>
+  <script src="/sistema/jquery/jquery.min.js" defer></script>
   <!-- BEGIN BLOCK_CACHE -->
   <link rel="stylesheet" href="/sistema/templates/wmadfgAGC1css.css?vcache=[cache]">
-  <script src="/sistema/templates/wmadfgCadastroAGC.js?vcache=[cache]"></script>
+  <script src="/sistema/templates/wmadfgCadastroAGC.js?vcache=[cache]" defer></script>
   <!-- END BLOCK_CACHE -->
 </head>
 <body>
@@ -21,16 +21,16 @@
     <img src="/sistema/templates/imgs/AGC_logo.png" alt="AgroClima" class="logo-img" />
   </div>
 
-  <!-- TÌtulo da seÁ„o -->
+  <!-- T√≠tulo da se√ß√£o -->
   <div class="section-title">Criar conta</div>
 
-  <!-- Mensagem de erro geral (aparece no topo do formul·rio) -->
+  <!-- Mensagem de erro geral (aparece no topo do formul√°rio) -->
   <div class="banner" id="banner">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     <span id="banner-msg"></span>
   </div>
 
-  <!-- Formul·rio de cadastro -->
+  <!-- Formul√°rio de cadastro -->
   <div id="formWrap">
 
     <!-- Campo: E-mail -->
@@ -42,7 +42,7 @@
         </span>
         <input type="email" id="email" placeholder="Digite seu e-mail" autocomplete="email" />
       </div>
-      <div class="erro-campo" id="email-err">Informe um e-mail v·lido.</div>
+      <div class="erro-campo" id="email-err">Informe um e-mail v√°lido.</div>
     </div>
 
     <!-- Campo: Senha -->
@@ -53,18 +53,18 @@
           <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </span>
         <input type="password" id="senha" placeholder="Crie uma senha" autocomplete="new-password" />
-        <!-- Bot„o para mostrar/ocultar senha -->
+        <!-- Bot√£o para mostrar/ocultar senha -->
         <button type="button" class="toggle-pw" id="toggleSenha" aria-label="Mostrar senha">
           <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </button>
       </div>
       <div class="dica-senha">A senha deve ter pelo menos 8 caracteres.</div>
-      <!-- Barra de forÁa da senha (s1=fraca, s2=razo·vel, s3=boa, s4=forte) -->
+      <!-- Barra de for√ßa da senha (s1=fraca, s2=razo√°vel, s3=boa, s4=forte) -->
       <div class="barra-forca" id="barraForca">
         <span></span><span></span><span></span><span></span>
       </div>
       <div class="label-forca" id="labelForca"></div>
-      <div class="erro-campo" id="senha-err">Senha deve ter no mÌnimo 8 caracteres.</div>
+      <div class="erro-campo" id="senha-err">Senha deve ter no m√≠nimo 8 caracteres.</div>
     </div>
 
     <!-- Campo: Confirmar Senha -->
@@ -79,16 +79,16 @@
           <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </button>
       </div>
-      <div class="erro-campo" id="confirma-err">As senhas n„o coincidem.</div>
+      <div class="erro-campo" id="confirma-err">As senhas n√£o coincidem.</div>
     </div>
 
-    <!-- Bot„o de envio -->
+    <!-- Bot√£o de envio -->
     <button class="btn-primario" id="btnCadastro" type="button">
       <div class="spinner"></div>
       <span class="btn-texto">Criar conta</span>
     </button>
 
-    <!-- Aviso de sucesso (aparece abaixo do bot„o apÛs cadastro) -->
+    <!-- Aviso de sucesso (aparece abaixo do bot√£o ap√≥s cadastro) -->
     <div class="aviso-sucesso" id="avisoSucesso">
       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
       Conta criada com sucesso!
@@ -97,7 +97,7 @@
     <div class="divisor">ou</div>
 
     <div class="link-login">
-      J· tem uma conta? <a href="wmadfgLoginAGC">Ir para login</a>
+      J√° tem uma conta? <a href="wmadfgLoginAGC">Ir para login</a>
     </div>
   </div>
 
