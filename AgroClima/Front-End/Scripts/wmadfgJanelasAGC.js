@@ -229,8 +229,6 @@ function renderCalendario(dias7, fnAvaliarHora) {
     var html = '<div class="jan-timeline-titulo">Previsão para os próximos 7 dias</div><div class="jan-calendario">';
 
     dias7.forEach(function (dia, i) {
-        // Como a função de avaliação foi desenhada para horas, criamos uma "hora simulada" 
-        // usando a média dos dados do dia para ter um veredito de aprovação daquele dia.
         var hSim = { temp: (dia.tempMax + dia.tempMin) / 2, umid: dia.umidMedia, chuva: dia.chuva / 24, vento: dia.ventoMedio };
         var status = fnAvaliarHora(hSim);
         
