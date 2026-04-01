@@ -4,16 +4,16 @@
 def var vtpl      as class Template.
 def var vpad-html as longchar.
 
-run p_load_html.
-run p_replace_html.
-run p_show_html.
+run p_load_html.    /* Carrega layout HTML padrão */
+run p_replace_html. /* Efetua a substituição das Tags coringas por conteudo dinâmico */
+run p_show_html.    /* Gera o HTML final */
 
 procedure p_load_html:
     copy-lob file "/agroweb/templates/wmadfgAlertasAGC.tpl" to vpad-html.
     assign vtpl = new Template(vpad-html).
 end procedure.
 
-procedure p_replace_html:
+procedure p_replace_html: /* APENAS A PRIMEIRA VEZ QUE CARREGA A TELA */
     vtpl:troca("[cache]", string(today, "99999999") + string(time, "999999")).
     vtpl:block("BLOCK_CACHE").
 end procedure.
@@ -22,9 +22,6 @@ procedure p_show_html:
     vtpl:show().
 end procedure.
 
-
-/* p_carregarPropriedades
-   Retorna propriedades do usuário — inclui id para o JS montar alertas corretamente */
 procedure p_carregarPropriedades:
 
     def var vidusuario as int.
@@ -33,22 +30,27 @@ procedure p_carregarPropriedades:
 
     assign vidusuario = int(get-value("vidusuario")).
 
-    assign vjson = "[".
+    assign vjson = "[". /* Inicia a string do array JSON */
 
+    /* Percorre todas as propriedades do usuário ordenando por nome */
     for each mg-propriedades no-lock
          where mg-propriedades.id-usuario = vidusuario
          by mg-propriedades.nome:
 
+        /* Monta o JSON, O til (~) atua como caractere de escape para
+           imprimir as aspas duplas exigidas pelo JSON */
         assign vjson = vjson + vsep
                      + "~{~"id~":"       + string(mg-propriedades.id-propriedade) + ","
                      +  "~"nome~":"      + "~"" + mg-propriedades.nome      + "~","
+                     /* Troca vírgula por ponto nas coordenadas */
                      +  "~"latitude~":"  + replace(string(mg-propriedades.latitude,  "->>>9.999999"), ",", ".") + ","
                      +  "~"longitude~":" + replace(string(mg-propriedades.longitude, "->>>9.999999"), ",", ".") + "~}"
                vsep  = ",".
     end.
 
-    assign vjson = vjson + "]".
+    assign vjson = vjson + "]". /* Fecha o array JSON */
 
+    /* Se não houver dados, retorna "VAZIO" */
     if vjson = "[]" then do:
         {&out} "VAZIO".
         quit.
@@ -59,9 +61,6 @@ procedure p_carregarPropriedades:
 
 end procedure.
 
-
-/* p_salvarAlertas
-   Recebe JSON com lista de alertas e salva os que não existem ainda hoje */
 procedure p_salvarAlertas:
 
     def var vidusuario     as int.
@@ -78,14 +77,17 @@ procedure p_salvarAlertas:
     def var vtotal         as int.
 
     assign vidusuario = int(get-value("vidusuario"))
-           valertas   = get-value("valertas").
+           valertas   = get-value("valertas"). /* String JSON bruta com todos os alertas */
 
+    /* Conta quantos alertas existem na string procurando por "tipo" */
     assign vtotal = 0.
     do vi = 1 to length(valertas):
         if substring(valertas, vi, 6) = "~"tipo~"" then assign vtotal = vtotal + 1.
     end.
 
+    /* Itera sobre a quantidade de alertas encontrados no JSON */
     do vi = 1 to vtotal:
+        /* Usa a 'p_extrairCampo' para retirar os valores do JSON. */
         run p_extrairCampo(input valertas, input "tipo",          input vi, output vtipo).
         run p_extrairCampo(input valertas, input "descricao",     input vi, output vdescricao).
         run p_extrairCampo(input valertas, input "data",          input vi, output vdata).
@@ -93,10 +95,12 @@ procedure p_salvarAlertas:
         run p_extrairCampo(input valertas, input "idPropriedade", input vi, output vitem).
         assign vidpropriedade = int(vitem).
 
+        /* Converte a string de data enviada pelo JS para o tipo DATE do Progress */
         assign vdataconv = date(int(substring(vdata,6,2)),
                                 int(substring(vdata,9,2)),
                                 int(substring(vdata,1,4))).
 
+        /* Checa se este alerta já foi salvo no banco. */
         find first mg-alertas no-lock
              where mg-alertas.id-usuario     = vidusuario
                and mg-alertas.id-propriedade = vidpropriedade
@@ -104,6 +108,7 @@ procedure p_salvarAlertas:
                and mg-alertas.data-alerta    = vdataconv
              no-error.
 
+        /* Se não existir, cria o novo alerta */
         if not avail mg-alertas then do:
             assign vcodigo = 1.
             for each mg-alertas no-lock by mg-alertas.id-alerta descending:
@@ -111,6 +116,7 @@ procedure p_salvarAlertas:
                 leave.
             end.
 
+            /* Insere o registro no banco */
             create mg-alertas.
             assign mg-alertas.id-alerta      = vcodigo
                    mg-alertas.id-usuario     = vidusuario
@@ -120,7 +126,8 @@ procedure p_salvarAlertas:
                    mg-alertas.data-alerta    = vdataconv
                    mg-alertas.hora-alerta    = vhora
                    mg-alertas.lido           = false.
-            release mg-alertas.
+                   
+            release mg-alertas. /* Limpa o buffer */
         end.
     end.
 
@@ -128,7 +135,6 @@ procedure p_salvarAlertas:
     quit.
 
 end procedure.
-
 
 procedure p_extrairCampo:
 
@@ -143,32 +149,36 @@ procedure p_extrairCampo:
     def var vcont  as int.
     def var vi     as int.
 
-    assign vbusca = '"' + pcampo + '":'.
+    assign vbusca = '"' + pcampo + '":'. /* Prepara a chave a ser buscada (Ex: "tipo":) */
     assign vcont  = 0.
     assign vpos1  = 0.
 
+    /* Procura a X ocorrência da chave */
     do vi = 1 to length(pjson):
         if substring(pjson, vi, length(vbusca)) = vbusca then do:
             assign vcont = vcont + 1.
             if vcont = pidx then do:
-                assign vpos1 = vi + length(vbusca).
+                assign vpos1 = vi + length(vbusca). /* Guarda a posição onde o valor começa */
                 leave.
             end.
         end.
     end.
 
+    /* Se não achou, retorna vazio */
     if vpos1 = 0 then do:
         assign pvalor = "".
         return.
     end.
 
+    /* Captura o conteúdo do valor, seja texto ou número */
     if substring(pjson, vpos1, 1) = '"' then do:
         assign vpos1 = vpos1 + 1.
-        assign vpos2 = index(substring(pjson, vpos1), '"') + vpos1 - 2.
+        assign vpos2 = index(substring(pjson, vpos1), '"') + vpos1 - 2. /* Acha o fim da aspa */
     end.
     else do:
         assign vpos2 = vpos1.
         do while vpos2 <= length(pjson):
+            /* Se for número, o valor termina numa , ou } */
             if substring(pjson, vpos2, 1) = ',' or
                substring(pjson, vpos2, 1) = '}' then leave.
             assign vpos2 = vpos2 + 1.
@@ -176,13 +186,11 @@ procedure p_extrairCampo:
         assign vpos2 = vpos2 - 1.
     end.
 
+    /* Extrai o conteúdo baseado na posição inicial e final */
     assign pvalor = substring(pjson, vpos1, vpos2 - vpos1 + 1).
 
 end procedure.
 
-
-/* p_carregarAlertas
-   Retorna alertas do dia atual (lido = false) do usuário */
 procedure p_carregarAlertas:
 
     def var vidusuario as int.
@@ -196,13 +204,14 @@ procedure p_carregarAlertas:
     assign vidusuario = int(get-value("vidusuario")).
     assign vjson = "[".
 
+    /* Filtra os alertas do usuário logado, apenas do dia de hoje e que ainda não foram marcados como lidos */
     for each mg-alertas no-lock
          where mg-alertas.id-usuario  = vidusuario
            and mg-alertas.data-alerta = today
            and mg-alertas.lido        = false
          by mg-alertas.tipo:
 
-        /* Zera variáveis antes de cada busca para não vazar dados da iteração anterior */
+        /* Zera as variáveis antes de cada busca */
         assign vnome  = ""
                vlocal = ""
                vlat   = "0"
@@ -219,6 +228,7 @@ procedure p_carregarAlertas:
                    vlon   = replace(string(mg-propriedades.longitude, "->>>9.999999"), ",", ".").
         end.
 
+        /* Monta o objeto JSON do alerta para enviar ao JS */
         assign vjson = vjson + vsep
                      + "~{~"id~":"             + string(mg-alertas.id-alerta) + ","
                      +  "~"tipo~":"            + "~"" + mg-alertas.tipo      + "~","
@@ -247,8 +257,6 @@ procedure p_carregarAlertas:
 
 end procedure.
 
-
-/* p_arquivarAlerta */
 procedure p_arquivarAlerta:
 
     def var vidalerta as int.
@@ -261,7 +269,7 @@ procedure p_arquivarAlerta:
 
     if avail mg-alertas then do:
         assign mg-alertas.lido = true.
-        release mg-alertas.
+        release mg-alertas. /* Grava e limpa o buffer */
     end.
 
     {&out} "OK".
@@ -269,8 +277,6 @@ procedure p_arquivarAlerta:
 
 end procedure.
 
-
-/* p_arquivarVarios */
 procedure p_arquivarVarios:
 
     def var vids      as char.
@@ -280,12 +286,15 @@ procedure p_arquivarVarios:
     def var vidalerta as int.
 
     assign vids   = get-value("vids").
-    assign vtotal = num-entries(vids, ",").
+    assign vtotal = num-entries(vids, ","). /* Conta quantos IDs vieram na lista, separados por vírgula */
 
+    /* Trata cada ID da lista */
     do vi = 1 to vtotal:
+        /* Extrai o ID na posição 'vi' da lista */
         assign vitem     = entry(vi, vids, ",")
-               vidalerta = int(trim(vitem)).
+               vidalerta = int(trim(vitem)). /* Remove espaços e converte pra inteiro */
 
+        /* Marca como lido */
         find first mg-alertas exclusive-lock
              where mg-alertas.id-alerta = vidalerta
              no-error.
