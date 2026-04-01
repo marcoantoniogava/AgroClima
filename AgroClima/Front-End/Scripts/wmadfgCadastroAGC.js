@@ -3,213 +3,209 @@
    JS principal
    ======================================== */
 
-   $(document).ready(function () {
-
-    /* --------------------------------------------------
-       Mostrar / ocultar senha
-       Configura o bot„o do olho para alternar o tipo
-       do input entre "password" e "text"
-    -------------------------------------------------- */
-    function configurarToggleSenha(idBotao, idInput) {
-        document.getElementById(idBotao).addEventListener('click', function () {
-            var input = document.getElementById(idInput);
-            input.type = input.type === 'text' ? 'password' : 'text';
-        });
-    }
-
-    configurarToggleSenha('toggleSenha', 'senha');
-    configurarToggleSenha('toggleConfirma', 'confirma');
-
-
-    /* --------------------------------------------------
-       Barra de forÁa da senha
-       Avalia a senha em tempo real e atualiza a barra
-       com as classes s1 (fraca) atÈ s4 (forte)
-    -------------------------------------------------- */
-    var barraForca = document.getElementById('barraForca');
-    var labelForca = document.getElementById('labelForca');
-
-    var niveis = [
-        { classe: '',   texto: '' },
-        { classe: 's1', texto: 'Fraca' },
-        { classe: 's2', texto: 'Razo·vel' },
-        { classe: 's3', texto: 'Boa' },
-        { classe: 's4', texto: 'Forte' },
-    ];
-
-    function calcularForcaSenha(senha) {
-        if (!senha) return 0;
-        var pontos = 0;
-        if (senha.length >= 8)  pontos++;
-        if (senha.length >= 12) pontos++;
-        if (/[A-Z]/.test(senha) && /[a-z]/.test(senha)) pontos++; // tem mai˙scula e min˙scula
-        if (/\d/.test(senha))            pontos++; // tem n˙mero
-        if (/[^A-Za-z0-9]/.test(senha)) pontos++; // tem caractere especial
-        return Math.min(4, Math.ceil(pontos * 4 / 5));
-    }
-
-    document.getElementById('senha').addEventListener('input', function () {
-        var nivel = calcularForcaSenha(this.value);
-        barraForca.className   = 'barra-forca' + (nivel ? ' s' + nivel : '');
-        labelForca.className   = 'label-forca' + (nivel ? ' s' + nivel : '');
-        labelForca.textContent = this.value ? niveis[nivel].texto : '';
+/* --------------------------------------------------
+   Mostrar / ocultar senha
+   Configura o bot√£o do olho para alternar o tipo
+   do input entre "password" e "text"
+-------------------------------------------------- */
+function configurarToggleSenha(idBotao, idInput) {
+    document.getElementById(idBotao).addEventListener('click', function () {
+        var input = document.getElementById(idInput);
+        input.type = input.type === 'text' ? 'password' : 'text';
     });
+}
+
+configurarToggleSenha('toggleSenha', 'senha');
+configurarToggleSenha('toggleConfirma', 'confirma');
 
 
-    /* --------------------------------------------------
-       FunÁıes auxiliares de validaÁ„o
-    -------------------------------------------------- */
+/* --------------------------------------------------
+   Barra de for√ßa da senha
+   Avalia a senha em tempo real e atualiza a barra
+   com as classes s1 (fraca) at√© s4 (forte)
+-------------------------------------------------- */
+var barraForca = document.getElementById('barraForca');
+var labelForca = document.getElementById('labelForca');
 
-    // Exibe a mensagem de erro abaixo do campo
-    function mostrarErro(idErro, mensagem) {
-        var elErro  = document.getElementById(idErro);
-        var idCampo = idErro.replace('-err', '');
-        if (mensagem) elErro.textContent = mensagem;
-        elErro.classList.add('visivel');
-        document.getElementById(idCampo).classList.add('erro');
-    }
+var niveis = [
+    { classe: '', texto: '' },
+    { classe: 's1', texto: 'Fraca' },
+    { classe: 's2', texto: 'Razo√°vel' },
+    { classe: 's3', texto: 'Boa' },
+    { classe: 's4', texto: 'Forte' },
+];
 
-    // Remove a mensagem de erro do campo
-    function limparErro(idErro) {
-        var idCampo = idErro.replace('-err', '');
-        document.getElementById(idErro).classList.remove('visivel');
-        document.getElementById(idCampo).classList.remove('erro');
-    }
+function calcularForcaSenha(senha) {
+    if (!senha) return 0;
+    var pontos = 0;
+    if (senha.length >= 8) pontos++;
+    if (senha.length >= 12) pontos++;
+    if (/[A-Z]/.test(senha) && /[a-z]/.test(senha)) pontos++; // tem mai√∫scula e min√∫scula
+    if (/\d/.test(senha)) pontos++; // tem n√∫mero
+    if (/[^A-Za-z0-9]/.test(senha)) pontos++; // tem caractere especial
+    return Math.min(4, Math.ceil(pontos * 4 / 5));
+}
 
-    // Exibe o banner de erro geral no topo do formul·rio
-    function mostrarBanner(mensagem) {
-        document.getElementById('banner-msg').textContent = mensagem;
-        document.getElementById('banner').classList.add('visivel');
-    }
-
-    // Oculta o banner de erro geral
-    function limparBanner() {
-        document.getElementById('banner').classList.remove('visivel');
-    }
-
-    // Oculta o aviso de sucesso
-    function limparSucesso() {
-        document.getElementById('avisoSucesso').classList.remove('visivel');
-    }
-
-    // Valida formato de e-mail
-    function emailValido(valor) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
-    }
+document.getElementById('senha').addEventListener('input', function () {
+    var nivel = calcularForcaSenha(this.value);
+    barraForca.className = 'barra-forca' + (nivel ? ' s' + nivel : '');
+    labelForca.className = 'label-forca' + (nivel ? ' s' + nivel : '');
+    labelForca.textContent = this.value ? niveis[nivel].texto : '';
+});
 
 
-    /* --------------------------------------------------
-       Limpa os erros enquanto o usu·rio digita
-    -------------------------------------------------- */
-    ['email', 'senha', 'confirma'].forEach(function (id) {
-        document.getElementById(id).addEventListener('input', function () {
-            limparErro(id + '-err');
-            limparBanner();
-            limparSucesso();
-        });
-    });
+/* --------------------------------------------------
+   Fun√ß√µes auxiliares de valida√ß√£o
+-------------------------------------------------- */
+
+// Exibe a mensagem de erro abaixo do campo
+function mostrarErro(idErro, mensagem) {
+    var elErro = document.getElementById(idErro);
+    var idCampo = idErro.replace('-err', '');
+    if (mensagem) elErro.textContent = mensagem;
+    elErro.classList.add('visivel');
+    document.getElementById(idCampo).classList.add('erro');
+}
+
+// Remove a mensagem de erro do campo
+function limparErro(idErro) {
+    var idCampo = idErro.replace('-err', '');
+    document.getElementById(idErro).classList.remove('visivel');
+    document.getElementById(idCampo).classList.remove('erro');
+}
+
+// Exibe o banner de erro geral no topo do formul?rio
+function mostrarBanner(mensagem) {
+    document.getElementById('banner-msg').textContent = mensagem;
+    document.getElementById('banner').classList.add('visivel');
+}
+
+// Oculta o banner de erro geral
+function limparBanner() {
+    document.getElementById('banner').classList.remove('visivel');
+}
+
+// Oculta o aviso de sucesso
+function limparSucesso() {
+    document.getElementById('avisoSucesso').classList.remove('visivel');
+}
+
+// Valida formato de e-mail
+function emailValido(valor) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+}
 
 
-    /* --------------------------------------------------
-       Envio do formul·rio
-       Chama a procedure p_cadastrar no Progress via $.ajax
-       Par‚metros enviados: vemail, vsenha
-       Retornos esperados do Progress:
-         OK              ? cadastro realizado com sucesso
-         EMAIL_DUPLICADO ? e-mail j· existe na tabela mg-usuarios
-    -------------------------------------------------- */
-    function enviarFormulario() {
-        var valido   = true;
-        var email    = document.getElementById('email').value.trim();
-        var senha    = document.getElementById('senha').value;
-        var confirma = document.getElementById('confirma').value;
-
+/* --------------------------------------------------
+   Limpa os erros enquanto o usu√°rio digita
+-------------------------------------------------- */
+['email', 'senha', 'confirma'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+        limparErro(id + '-err');
         limparBanner();
         limparSucesso();
-        limparErro('email-err');
-        limparErro('senha-err');
-        limparErro('confirma-err');
+    });
+});
 
-        if (!email || !emailValido(email)) {
-            mostrarErro('email-err');
-            valido = false;
-        }
 
-        if (senha.length < 8) {
-            mostrarErro('senha-err');
-            valido = false;
-        }
+/* --------------------------------------------------
+   Envio do formul√°rio
+   Chama a procedure p_cadastrar no Progress via $.ajax
+   Par√¢metros enviados: vemail, vsenha
+   Retornos esperados do Progress:
+     OK              - cadastro realizado com sucesso
+     EMAIL_DUPLICADO - e-mail j√° existe na tabela mg-usuarios
+-------------------------------------------------- */
+function enviarFormulario() {
+    var valido = true;
+    var email = document.getElementById('email').value.trim();
+    var senha = document.getElementById('senha').value;
+    var confirma = document.getElementById('confirma').value;
 
-        if (senha !== confirma) {
-            mostrarErro('confirma-err');
-            valido = false;
-        }
+    limparBanner();
+    limparSucesso();
+    limparErro('email-err');
+    limparErro('senha-err');
+    limparErro('confirma-err');
 
-        if (!valido) return;
-
-        var btn = document.getElementById('btnCadastro');
-        btn.classList.add('carregando');
-        btn.disabled = true;
-
-        var vaux  = window.location.href.indexOf('?') > -1 ? '&' : '?';
-        var vdata = 'vemail=' + encodeURIComponent(email)
-                  + '&vsenha=' + encodeURIComponent(senha);
-
-        $.ajax({
-            type: 'POST',
-            contentType: 'Content-type: text/plain; charset=iso-8859-1',
-            beforeSend: function (jqXHR) {
-                jqXHR.overrideMimeType('text/html;charset=iso-8859-1');
-            },
-            url: window.location.href + vaux + 'vpad_proc=p_cadastrar',
-            data: vdata,
-            dataType: 'html',
-            success: function (vresult) {
-                btn.classList.remove('carregando');
-                btn.disabled = false;
-
-                if (vresult.trim() === 'OK') {
-                    // Limpa os campos
-                    document.getElementById('email').value    = '';
-                    document.getElementById('senha').value    = '';
-                    document.getElementById('confirma').value = '';
-
-                    // Reseta a barra de forÁa da senha
-                    barraForca.className   = 'barra-forca';
-                    labelForca.className   = 'label-forca';
-                    labelForca.textContent = '';
-
-                    // Exibe aviso de sucesso
-                    document.getElementById('avisoSucesso').classList.add('visivel');
-
-                } else if (vresult.trim() === 'EMAIL_DUPLICADO') {
-                    mostrarBanner('Este e-mail j· est· cadastrado.');
-
-                } else {
-                    mostrarBanner('Erro ao criar conta. Tente novamente.');
-                    console.log('Retorno inesperado:', vresult);
-                }
-            },
-            error: function (verror) {
-                btn.classList.remove('carregando');
-                btn.disabled = false;
-                mostrarBanner('Erro na requisiÁ„o. Tente novamente.');
-                console.log(verror);
-            }
-        });
+    if (!email || !emailValido(email)) {
+        mostrarErro('email-err');
+        valido = false;
     }
 
+    if (senha.length < 8) {
+        mostrarErro('senha-err');
+        valido = false;
+    }
 
-    /* --------------------------------------------------
-       Eventos de disparo do envio
-    -------------------------------------------------- */
+    if (senha !== confirma) {
+        mostrarErro('confirma-err');
+        valido = false;
+    }
 
-    // Clique no bot„o
-    document.getElementById('btnCadastro').addEventListener('click', enviarFormulario);
+    if (!valido) return;
 
-    // Tecla Enter em qualquer campo
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') enviarFormulario();
+    var btn = document.getElementById('btnCadastro');
+    btn.classList.add('carregando');
+    btn.disabled = true;
+
+    var vaux = window.location.href.indexOf('?') > -1 ? '&' : '?';
+    var vdata = 'vemail=' + encodeURIComponent(email)
+        + '&vsenha=' + encodeURIComponent(senha);
+
+    $.ajax({
+        type: 'POST',
+        contentType: 'Content-type: text/plain; charset=UTF-8',
+        beforeSend: function (jqXHR) {
+            jqXHR.overrideMimeType('text/html;charset=UTF-8');
+        },
+        url: window.location.href + vaux + 'vpad_proc=p_cadastrar',
+        data: vdata,
+        dataType: 'html',
+        success: function (vresult) {
+            btn.classList.remove('carregando');
+            btn.disabled = false;
+
+            if (vresult.trim() === 'OK') {
+                // Limpa os campos
+                document.getElementById('email').value = '';
+                document.getElementById('senha').value = '';
+                document.getElementById('confirma').value = '';
+
+                // Reseta a barra de for√ßa da senha
+                barraForca.className = 'barra-forca';
+                labelForca.className = 'label-forca';
+                labelForca.textContent = '';
+
+                // Exibe aviso de sucesso
+                document.getElementById('avisoSucesso').classList.add('visivel');
+
+            } else if (vresult.trim() === 'EMAIL_DUPLICADO') {
+                mostrarBanner('Este e-mail j√° est√° cadastrado.');
+
+            } else {
+                mostrarBanner('Erro ao criar conta. Tente novamente.');
+                console.log('Retorno inesperado:', vresult);
+            }
+        },
+        error: function (verror) {
+            btn.classList.remove('carregando');
+            btn.disabled = false;
+            mostrarBanner('Erro na requisi√ß√£o. Tente novamente.');
+            console.log(verror);
+        }
     });
+}
 
+
+/* --------------------------------------------------
+   Eventos de disparo do envio
+-------------------------------------------------- */
+
+// Clique no bot√£o
+document.getElementById('btnCadastro').addEventListener('click', enviarFormulario);
+
+// Tecla Enter em qualquer campo
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') enviarFormulario();
 });
