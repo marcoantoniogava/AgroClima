@@ -4,22 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgroClima ? Propriedades</title>
+  <title>AgroClima - Propriedades</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script src="/sistema/jquery/jquery.min.js"></script>
+  <script src="/sistema/jquery/jquery.min.js" defer></script>
   <!-- BEGIN BLOCK_CACHE -->
   <link rel="stylesheet" href="/sistema/templates/wmadfgHistoricoAGC.css?vcache=[cache]">
   <link rel="stylesheet" href="/sistema/templates/wmadfgAGC2css.css?vcache=[cache]">
-  <script src="/sistema/templates/wmadfgPropriedadesAGC.js?vcache=[cache]"></script>
+  <script src="/sistema/templates/wmadfgPropriedadesAGC.js?vcache=[cache]" defer></script>
   <!-- END BLOCK_CACHE -->
 </head>
 <body>
 
 <div class="layout">
 
-  <!-- ???????????????????????????????
+  <!-- ===============================
        SIDEBAR
-  ??????????????????????????????? -->
+  =============================== -->
   <aside class="sidebar">
 
     <!-- Logo -->
@@ -27,7 +27,7 @@
       <img src="/sistema/templates/imgs/AGC_logo.png" alt="AgroClima" />
     </div>
 
-    <!-- NavegaÁ„o -->
+    <!-- Navega√ß√£o -->
     <nav class="sidebar-nav">
       <a href="#" class="nav-item ativo" id="nav-propriedades">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -39,17 +39,17 @@
       </a>
       <a href="wmadfgHistoricoAGC" class="nav-item" id="nav-historico">
         <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
-        HistÛrico
+        Hist√≥rico
       </a>
     </nav>
 
-    <!-- Usu·rio logado (rodapÈ da sidebar) -->
+    <!-- Usu√°rio logado (rodap√© da sidebar) -->
     <div class="sidebar-usuario">
       <div class="usuario-avatar">
         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </div>
       <div class="usuario-info">
-        <span class="usuario-nome" id="nomeUsuario">Usu·rio</span>
+        <span class="usuario-nome" id="nomeUsuario">Usu√°rio</span>
         <span class="usuario-label">Conta</span>
       </div>
       <button class="btn-logout" id="btnLogout" title="Sair da conta">
@@ -63,16 +63,16 @@
 
   </aside>
 
-  <!-- ???????????????????????????????
-       CONTE⁄DO PRINCIPAL
-  ??????????????????????????????? -->
+  <!-- ===============================
+       CONTE√öDO PRINCIPAL
+  =============================== -->
   <main class="conteudo">
 
-    <!-- CabeÁalho da p·gina -->
+    <!-- Cabe√ßalho da p√°gina -->
     <div class="pagina-cabecalho">
       <div>
         <h1 class="pagina-titulo">Propriedades</h1>
-        <p class="pagina-sub">Gerencie suas propriedades agrÌcolas e monitore o clima em tempo real.</p>
+        <p class="pagina-sub">Gerencie suas propriedades agr√≠colas e monitore o clima em tempo real.</p>
       </div>
       <button class="btn-nova-propriedade" id="btnAbrirModal">
         <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -83,7 +83,7 @@
     <!-- Barra de busca -->
     <div class="barra-busca-wrap">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="campoBusca" placeholder="Buscar por nome ou localizaÁ„o..." />
+      <input type="text" id="campoBusca" placeholder="Buscar por nome ou localiza√ß√£o..." />
     </div>
 
     <!-- Tabela de propriedades -->
@@ -92,18 +92,18 @@
         <thead>
           <tr>
             <th>Nome</th>
-            <th>LocalizaÁ„o</th>
+            <th>Localiza√ß√£o</th>
             <th>Latitude</th>
             <th>Longitude</th>
-            <th>AÁ„o</th>
+            <th>A√ß√£o</th>
           </tr>
         </thead>
         <tbody id="corpoTabela">
-            <!-- Linhas carregadas dinamicamente pelo JS ao iniciar a p·gina -->
+            <!-- Linhas carregadas dinamicamente pelo JS ao iniciar a p√°gina -->
         </tbody>
       </table>
 
-      <!-- Mensagem quando n„o h· propriedades ou busca sem resultado -->
+      <!-- Mensagem quando n√£o h√° propriedades ou busca sem resultado -->
       <div class="tabela-vazia" id="tabelaVazia">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Nenhuma propriedade encontrada.</span>
@@ -113,13 +113,13 @@
   </main>
 </div>
 
-<!-- ???????????????????????????????
-     MODAL ? Cadastro de Propriedade
-??????????????????????????????? -->
+<!-- ===============================
+     MODAL - Cadastro de Propriedade
+=============================== -->
 <div class="modal-fundo" id="modalFundo">
   <div class="modal">
 
-    <!-- CabeÁalho do modal -->
+    <!-- Cabe√ßalho do modal -->
     <div class="modal-cabecalho">
       <h2 class="modal-titulo">Nova propriedade</h2>
       <button class="modal-fechar" id="btnFecharModal" aria-label="Fechar">
@@ -148,9 +148,9 @@
         <div class="erro-campo" id="nomePropriedade-err">Informe o nome da propriedade.</div>
       </div>
 
-      <!-- Campo: Busca de localizaÁ„o -->
+      <!-- Campo: Busca de localiza√ß√£o -->
       <div class="field">
-        <label for="buscaLocalizacao">LocalizaÁ„o</label>
+        <label for="buscaLocalizacao">Localiza√ß√£o</label>
         <div class="input-wrap">
           <span class="input-icon">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -159,29 +159,29 @@
           <!-- Spinner de busca -->
           <div class="spinner-busca" id="spinnerBusca"></div>
         </div>
-        <div class="erro-campo" id="localizacao-err">Selecione uma localizaÁ„o v·lida da lista.</div>
+        <div class="erro-campo" id="localizacao-err">Selecione uma localiza√ß√£o v√°lida da lista.</div>
       </div>
 
       <!-- Lista de resultados da API de geocoding -->
       <div class="lista-locais" id="listaLocais">
-        <!-- Preenchida dinamicamente pelo JS apÛs retorno da API Open-Meteo -->
+        <!-- Preenchida dinamicamente pelo JS ap√≥s retorno da API Open-Meteo -->
       </div>
 
-      <!-- Local selecionado (exibido apÛs escolher da lista) -->
+      <!-- Local selecionado (exibido ap√≥s escolher da lista) -->
       <div class="local-selecionado" id="localSelecionado">
         <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <div class="local-selecionado-info">
           <span class="local-selecionado-nome" id="localSelecionadoNome"></span>
           <span class="local-selecionado-coords" id="localSelecionadoCoords"></span>
         </div>
-        <button type="button" class="local-selecionado-remover" id="btnRemoverLocal" aria-label="Remover localizaÁ„o">
+        <button type="button" class="local-selecionado-remover" id="btnRemoverLocal" aria-label="Remover localiza√ß√£o">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
     </div>
 
-    <!-- RodapÈ do modal -->
+    <!-- Rodap√© do modal -->
     <div class="modal-rodape">
       <button class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
       <button class="btn-primario-modal" id="btnSalvarPropriedade">
