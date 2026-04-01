@@ -4,16 +4,16 @@
 def var vtpl      as class Template.
 def var vpad-html as longchar.
 
-run p_load_html.
-run p_replace_html.
-run p_show_html.
+run p_load_html.    /* Carrega layout HTML padrão */
+run p_replace_html. /* Efetua a substituição das Tags coringas por conteudo dinâmico */
+run p_show_html.    /* Gera o HTML final */
 
 procedure p_load_html:
     copy-lob file "/agroweb/templates/wmadfgHistoricoAGC.tpl" to vpad-html.
     assign vtpl = new Template(vpad-html).
 end procedure.
 
-procedure p_replace_html:
+procedure p_replace_html: /* APENAS A PRIMEIRA VEZ QUE CARREGA A TELA */
     vtpl:troca("[cache]", string(today, "99999999") + string(time, "999999")).
     vtpl:block("BLOCK_CACHE").
 end procedure.
@@ -21,7 +21,6 @@ end procedure.
 procedure p_show_html:
     vtpl:show().
 end procedure.
-
 
 procedure p_carregarHistorico:
 
@@ -40,15 +39,18 @@ procedure p_carregarHistorico:
     def var vobj       as char.
     def var vpar       as char.
 
+    /* Recupera o ID do usuário enviado pelo Ajax */
     assign vidusuario = int(get-value("vidusuario")).
-    assign vjson = "[".
+    assign vjson = "[". /* Abre o array do JSON */
 
+    /* Busca apenas os alertas do usuário que já foram lidos */
     for each mg-alertas no-lock
          where mg-alertas.id-usuario = vidusuario
            and mg-alertas.lido       = true
          by mg-alertas.data-alerta descending
          by mg-alertas.hora-alerta  descending:
 
+        /* Busca a propriedade relacionada a este alerta */
         find first mg-propriedades no-lock
              where mg-propriedades.id-propriedade = mg-alertas.id-propriedade
              no-error.
@@ -57,18 +59,21 @@ procedure p_carregarHistorico:
         if avail mg-propriedades then
             assign vnome = mg-propriedades.nome.
 
+        /* Prepara as variáveis convertendo os tipos do banco pra char */
         assign vdesc = mg-alertas.descricao.
         assign vid   = string(mg-alertas.id-alerta).
         assign vtipo = mg-alertas.tipo.
         assign vhora = mg-alertas.hora-alerta.
+        
+        /* Formata a data */
         assign vano  = string(year(mg-alertas.data-alerta),  "9999").
         assign vmes  = string(month(mg-alertas.data-alerta), "99").
         assign vdia  = string(day(mg-alertas.data-alerta),   "99").
         assign vdata = vano + "-" + vmes + "-" + vdia.
 
-        /* monta cada par chave:valor separadamente */
         assign vobj = "~{".
 
+        /* Monta e concatena cada par de informação no objeto */
         assign vpar = "id:" + vid.
         assign vobj = vobj + vpar + ",".
 
@@ -87,14 +92,16 @@ procedure p_carregarHistorico:
         assign vpar = "nomePropriedade:" + vnome.
         assign vobj = vobj + vpar.
 
-        assign vobj = vobj + "}".
+        assign vobj = vobj + "}". /* Fecha o objeto */
 
+        /* Adiciona o objeto construído dentro do array */
         assign vjson = vjson + vsep + vobj.
-        assign vsep  = ",".
+        assign vsep  = ",". /* A partir do segundo registro, coloca vírgula para separar da linha anterior */
     end.
 
-    assign vjson = vjson + "]".
+    assign vjson = vjson + "]". /* Fecha o array */
 
+    /* Se a string estiver apenas com os colchetes, o histórico está vazio */
     if vjson = "[]" then do:
         {&out} "VAZIO".
         quit.
@@ -105,10 +112,6 @@ procedure p_carregarHistorico:
 
 end procedure.
 
-/* p_excluirAlerta
-   Recebe: vidalerta (int)
-   Deleta o mg-alertas cujo id-alerta = vidalerta
-   Retorna: "OK" ou "ERRO" */
 procedure p_excluirAlerta:
 
     def var vidalerta as int.
@@ -124,18 +127,13 @@ procedure p_excluirAlerta:
         {&out} "OK".
     end.
     else do:
-        {&out} "ERRO".
+        {&out} "ERRO". /* Retorna erro caso o registro não exista mais */
     end.
 
     quit.
 
 end procedure.
 
-
-/* p_excluirTodos
-   Recebe: vidusuario (int)
-   Deleta todos os mg-alertas do usu�rio onde lido = true
-   Retorna: "OK" */
 procedure p_excluirTodos:
 
     def var vidusuario as int.
@@ -145,7 +143,8 @@ procedure p_excluirTodos:
     for each mg-alertas exclusive-lock
          where mg-alertas.id-usuario = vidusuario
            and mg-alertas.lido       = true:
-        delete mg-alertas.
+           
+        delete mg-alertas. /* Remove do banco cada alerta encontrado */
     end.
 
     {&out} "OK".
