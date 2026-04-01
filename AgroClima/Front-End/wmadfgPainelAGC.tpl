@@ -2,15 +2,15 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="iso-8859-1" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgroClima - Painel Climático</title>
+  <title>AgroClima - Painel ClimÃ¡tico</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="/sistema/jquery/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <script src="/sistema/jquery/jquery.min.js" defer></script>
   <!-- BEGIN BLOCK_CACHE -->
   <link rel="stylesheet" href="/sistema/templates/wmadfgPainelAGC.css?vcache=[cache]">
-  <script src="/sistema/templates/wmadfgPainelAGC.js?vcache=[cache]"></script>
+  <script src="/sistema/templates/wmadfgPainelAGC.js?vcache=[cache]" defer></script>
   <!-- END BLOCK_CACHE -->
 </head>
 <body>
@@ -35,12 +35,12 @@
 </header>
 
 <!-- ===============================
-     NAVEGAÇÃO POR ABAS
+     NAVEGAÃ‡ÃƒO POR ABAS
 =============================== -->
 <nav class="nav-abas">
   <button class="nav-aba ativo" id="nav-painel">
     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-    Painel Climático
+    Painel ClimÃ¡tico
   </button>
   <button class="nav-aba" id="nav-janelas">
     <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -49,30 +49,30 @@
 </nav>
 
 <!-- ===============================
-     CONTEÚDO PRINCIPAL
+     CONTEÃšDO PRINCIPAL
 =============================== -->
 <main class="conteudo" id="conteudoPrincipal">
 
   <!-- Estado: carregando -->
   <div class="estado-loading" id="estadoLoading">
     <div class="spinner-api"></div>
-    <p>Buscando dados climáticos...</p>
+    <p>Buscando dados climÃ¡ticos...</p>
   </div>
 
   <!-- Estado: erro -->
   <div class="estado-erro" id="estadoErro" style="display:none">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <p id="estadoErroMsg">Não foi possível carregar os dados climáticos.</p>
+    <p id="estadoErroMsg">NÃ£o foi possÃ­vel carregar os dados climÃ¡ticos.</p>
   </div>
 
-  <!-- Conteúdo climático (preenchido pelo JS) -->
+  <!-- ConteÃºdo climÃ¡tico (preenchido pelo JS) -->
   <div id="conteudoClima" style="display:none">
 
-    <!-- Seletor de período -->
+    <!-- Seletor de perÃ­odo -->
     <div class="periodo-wrap">
-      <div class="periodo-titulo">Condições Climáticas</div>
+      <div class="periodo-titulo">CondiÃ§Ãµes ClimÃ¡ticas</div>
       <div class="periodo-abas">
-        <button class="periodo-aba ativo" id="aba48h">Próximas 48h</button>
+        <button class="periodo-aba ativo" id="aba48h">PrÃ³ximas 48h</button>
         <button class="periodo-aba" id="aba7dias">7 Dias</button>
       </div>
     </div>
@@ -84,8 +84,8 @@
           <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
         </div>
         <div class="card-clima-label">Temperatura Atual</div>
-        <div class="card-clima-valor" id="cardTemp">-<span>°C</span></div>
-        <div class="card-clima-detalhe" id="cardTempDetalhe">Sensação: -</div>
+        <div class="card-clima-valor" id="cardTemp">-<span>Â°C</span></div>
+        <div class="card-clima-detalhe" id="cardTempDetalhe">SensaÃ§Ã£o: -</div>
       </div>
       <div class="card-clima">
         <div class="card-clima-icone umid">
@@ -107,7 +107,7 @@
         <div class="card-clima-icone chuva">
           <svg viewBox="0 0 24 24"><line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg>
         </div>
-        <div class="card-clima-label">Precipitação (24h)</div>
+        <div class="card-clima-label">PrecipitaÃ§Ã£o (24h)</div>
         <div class="card-clima-valor" id="cardChuva">-<span> mm</span></div>
         <div class="card-clima-detalhe" id="cardChuvaDetalhe">-</div>
       </div>
@@ -117,7 +117,7 @@
     <div class="painel-48h ativo" id="painel48h">
       <div class="grafico-wrap">
         <div class="grafico-header">
-          <div class="grafico-titulo">Temperatura e Precipitação, Próximas 48h</div>
+          <div class="grafico-titulo">Temperatura e PrecipitaÃ§Ã£o, PrÃ³ximas 48h</div>
           <div class="grafico-legenda">
             <div class="legenda-item"><div class="legenda-cor temp"></div> Temperatura</div>
             <div class="legenda-item"><div class="legenda-cor chuva"></div> Chuva</div>
@@ -130,7 +130,7 @@
 
       <div class="grafico-wrap">
         <div class="grafico-header">
-          <div class="grafico-titulo">Umidade Relativa, Próximas 48h</div>
+          <div class="grafico-titulo">Umidade Relativa, PrÃ³ximas 48h</div>
           <div class="grafico-legenda">
             <div class="legenda-item"><div class="legenda-cor umid"></div> Umidade (%)</div>
           </div>
@@ -145,10 +145,10 @@
     <div class="painel-7dias" id="painel7dias">
       <div class="grafico-wrap">
         <div class="grafico-header">
-          <div class="grafico-titulo">Temperatura Máx/Mín, 7 Dias</div>
+          <div class="grafico-titulo">Temperatura MÃ¡x/MÃ­n, 7 Dias</div>
           <div class="grafico-legenda">
-            <div class="legenda-item"><div class="legenda-cor temp"></div> Máxima</div>
-            <div class="legenda-item"><div class="legenda-cor umid"></div> Mínima</div>
+            <div class="legenda-item"><div class="legenda-cor temp"></div> MÃ¡xima</div>
+            <div class="legenda-item"><div class="legenda-cor umid"></div> MÃ­nima</div>
           </div>
         </div>
         <div class="grafico-container">
@@ -162,11 +162,11 @@
           <thead>
             <tr>
               <th>Dia</th>
-              <th>Máx</th>
-              <th>Mín</th>
+              <th>MÃ¡x</th>
+              <th>MÃ­n</th>
               <th>Chuva</th>
               <th>Umidade</th>
-              <th>Vento máx</th>
+              <th>Vento mÃ¡x</th>
             </tr>
           </thead>
           <tbody id="corpo7dias"></tbody>
